@@ -1,11 +1,14 @@
 import "./App.css";
 import Map from "./Components/Map/Map";
-
+import Slider from "./Components/Slider/Slider";
+import "swiper/css";
 function App() {
+  
   return (
     <>
-      <h1 className="text-4xl font-bold">Zap Shift </h1>
-      <Map />
+      
+      
+      
     </>
   );
 }
