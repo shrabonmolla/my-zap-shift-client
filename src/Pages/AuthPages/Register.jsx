@@ -1,7 +1,49 @@
 import React from "react";
 import { Link } from "react-router";
+import { useForm } from "react-hook-form";
+import SocialSignIn from "../../Components/Auth/SocialSignIn";
 
+import useAuthHook from "../../useAuthHook";
+import axios from "axios";
 export default function Register() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const { registerUser, setUser, updateUser } = useAuthHook();
+  // handaling register user
+
+  function handleRegister(formdata) {
+    // console.log("after register", formdata);
+    const userPhoto = formdata.photo[0];
+    // console.log(userPhoto);
+    registerUser(formdata.email, formdata.password)
+      .then((userCredential) => {
+        setUser(userCredential.user);
+        // 1.store imge to from data
+        const fromdata = new FormData();
+        fromdata.append("image", userPhoto);
+        // 2.send img to imgbb and get the url
+        axios
+          .post(
+            `https://api.imgbb.com/1/upload?key=21056502350557c7e773fb27b0740e40`,
+            fromdata
+          )
+          .then((data) => {
+            console.log(data);
+            const profileData = {
+              displayName: formdata.name,
+              photoURL: data.data.data.url,
+            };
+            updateUser(profileData)
+              .then(() => console.log("profile updated"))
+              .catch((err) => console.log(err.message));
+          });
+      })
+      .catch((err) => console.log(err.message));
+  }
+
   return (
     <div className="card bg-base-100 w-full max-w-sm shrink-0 ">
       <div className="card-body">
@@ -9,17 +51,47 @@ export default function Register() {
           <h1 className="title">Create an Account</h1>
           <p>Register with ZapShift</p>
         </div>
-        <fieldset className="fieldset">
-          <input
-            type="file"
-            className="file-input file-input-primary text-black"
-          />
+        <form onSubmit={handleSubmit(handleRegister)} className="fieldset">
+          <input {...register("photo")} type="file" className="file-input" />
           <label className="label">Name</label>
-          <input type="text" className="input" placeholder="Name" />
+          <input
+            {...register("name", { required: "Name is requrired" })}
+            type="text"
+            className="input"
+            placeholder="Name"
+          />
+          {/* name error handeling */}
+          {errors.name?.type == "required" && (
+            <p className="text-red-300">Name field is reuquird</p>
+          )}
+
           <label className="label">Email</label>
-          <input type="email" className="input" placeholder="Email" />
+          <input
+            {...register("email", { required: true })}
+            type="email"
+            className="input"
+            placeholder="Email"
+          />
+          {errors.email?.type == "required" && (
+            <p className="text-red-300">Email field is reuquird</p>
+          )}
+
           <label className="label">Password</label>
-          <input type="password" className="input" placeholder="Password" />
+          <input
+            {...register("password", { required: true, minLength: 6 })}
+            type="password"
+            className="input"
+            placeholder="Password"
+          />
+          {errors.password?.type == "required" && (
+            <p className="text-red-300">password field is reuquird</p>
+          )}
+          {errors.password?.type == "minLength" && (
+            <p className="text-red-300">
+              password have to be atleast 6 charecter
+            </p>
+          )}
+
           <div>
             <a className="link link-hover">Forgot password?</a>
           </div>
@@ -36,38 +108,8 @@ export default function Register() {
           <div className="flex w-full flex-col">
             <div className="divider">OR</div>
           </div>
-          {/* Google */}
-          <button className="btn bg-white text-black border-[#e5e5e5]">
-            <svg
-              aria-label="Google logo"
-              width="16"
-              height="16"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 512 512"
-            >
-              <g>
-                <path d="m0 0H512V512H0" fill="#fff"></path>
-                <path
-                  fill="#34a853"
-                  d="M153 292c30 82 118 95 171 60h62v48A192 192 0 0190 341"
-                ></path>
-                <path
-                  fill="#4285f4"
-                  d="m386 400a140 175 0 0053-179H260v74h102q-7 37-38 57"
-                ></path>
-                <path
-                  fill="#fbbc02"
-                  d="m90 341a208 200 0 010-171l63 49q-12 37 0 73"
-                ></path>
-                <path
-                  fill="#ea4335"
-                  d="m153 219c22-69 116-109 179-50l55-54c-78-75-230-72-297 55"
-                ></path>
-              </g>
-            </svg>
-            Login with Google
-          </button>
-        </fieldset>
+          <SocialSignIn />
+        </form>
       </div>
     </div>
   );

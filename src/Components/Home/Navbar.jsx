@@ -2,8 +2,15 @@ import React from "react";
 import Logo from "./Logo";
 import { Link, NavLink } from "react-router";
 import Button from "./Button";
+import useAuthHook from "../../useAuthHook";
 
 export default function Navbar() {
+  const { user, logOutuser } = useAuthHook();
+  // handle user log out
+  function handleUserLogout() {
+    logOutuser();
+  }
+  // navbar all list
   const list = (
     <>
       <li>
@@ -59,12 +66,36 @@ export default function Navbar() {
           <ul className="menu menu-horizontal px-1">{list}</ul>
         </div>
         <div className="navbar-end gap-2">
-          <Link
-            to="/login"
-            className="btn btn-outline border-gray-300 text-gray-600 rounded-xl"
-          >
-            Sign In{" "}
-          </Link>
+          {user && (
+            <div>
+              <div
+                className="tooltip tooltip-open tooltip-bottom"
+                data-tip={user.displayName}
+              >
+                <img
+                  className="size-10 rounded-full"
+                  src={user.photoURL}
+                  alt=""
+                />
+              </div>
+            </div>
+          )}
+          {user ? (
+            <Link
+              onClick={handleUserLogout}
+              to="/login"
+              className="btn btn-outline border-gray-300 text-gray-600 rounded-xl"
+            >
+              Log Out
+            </Link>
+          ) : (
+            <Link
+              to="/login"
+              className="btn btn-outline border-gray-300 text-gray-600 rounded-xl"
+            >
+              Sign In{" "}
+            </Link>
+          )}
           <Link className="hidden lg:block">
             <Button btnText={"Be a Raider"} />
           </Link>
