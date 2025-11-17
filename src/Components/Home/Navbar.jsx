@@ -52,15 +52,17 @@ export default function Navbar() {
               {list}
             </ul>
           </div>
-          <Link className="btn btn-ghost text-xl">
-            <Logo />
-          </Link>
+
+          <Logo />
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">{list}</ul>
         </div>
         <div className="navbar-end gap-2">
-          <Link className="btn btn-outline border-gray-300 text-gray-600 rounded-xl">
+          <Link
+            to="/login"
+            className="btn btn-outline border-gray-300 text-gray-600 rounded-xl"
+          >
             Sign In{" "}
           </Link>
           <Link className="hidden lg:block">
