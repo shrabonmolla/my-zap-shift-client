@@ -4,6 +4,7 @@ import Home from "../Components/Home/Home";
 import AuthLayout from "../Layouts/AuthLayout";
 import Login from "../Pages/AuthPages/Login";
 import Register from "../Pages/AuthPages/Register";
+import AddParcel from "../Pages/Addparcel/AddParcel";
 
 export const router = createBrowserRouter([
   // mainlayout
@@ -14,6 +15,10 @@ export const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "add-parcel",
+        element: <AddParcel />,
       },
     ],
   },

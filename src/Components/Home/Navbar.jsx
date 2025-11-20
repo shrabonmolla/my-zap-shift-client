@@ -23,7 +23,7 @@ export default function Navbar() {
         <NavLink to="/">About Us</NavLink>
       </li>
       <li>
-        <NavLink to="/">Pricing</NavLink>
+        <NavLink to="/add-parcel">Pricing</NavLink>
       </li>
       <li>
         <NavLink to="/">Be a Rider</NavLink>
