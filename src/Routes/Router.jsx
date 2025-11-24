@@ -19,6 +19,7 @@ export const router = createBrowserRouter([
       {
         path: "add-parcel",
         element: <AddParcel />,
+        loader: () => fetch("./map.json"),
       },
     ],
   },
