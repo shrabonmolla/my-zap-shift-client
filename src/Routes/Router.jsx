@@ -5,6 +5,11 @@ import AuthLayout from "../Layouts/AuthLayout";
 import Login from "../Pages/AuthPages/Login";
 import Register from "../Pages/AuthPages/Register";
 import AddParcel from "../Pages/Addparcel/AddParcel";
+import DashboardLayout from "../Layouts/DashboardLayout";
+import MyParcel from "../Pages/DashboardPages/MyParcel";
+import Payments from "../Pages/DashboardPages/PymentsPage/Payments";
+import PaySuccess from "../Pages/DashboardPages/PymentsPage/PaySuccess";
+import PayCancel from "../Pages/DashboardPages/PymentsPage/PayCancel";
 
 export const router = createBrowserRouter([
   // mainlayout
@@ -35,6 +40,30 @@ export const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register />,
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: <DashboardLayout />,
+    children: [
+      {
+        path: "my-parcel",
+        element: <MyParcel />,
+      },
+      {
+        path: "payments/:paymentId",
+        element: <Payments />,
+        loader: ({ params }) =>
+          fetch(`http://localhost:3000/payments/${params.paymentId}`),
+      },
+      {
+        path: "payment-success",
+        element: <PaySuccess />,
+      },
+      {
+        path: "payment-cancel",
+        element: <PayCancel />,
       },
     ],
   },

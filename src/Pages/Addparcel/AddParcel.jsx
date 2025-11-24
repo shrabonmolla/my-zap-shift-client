@@ -2,8 +2,10 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useLoaderData } from "react-router";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 export default function AddParcel() {
+  const axiosSecure = useAxiosSecure();
   const { register, watch, handleSubmit } = useForm();
   const serviceCenters = useLoaderData();
   const duplicateRegion = serviceCenters.map((r) => r.region);
@@ -49,6 +51,7 @@ export default function AddParcel() {
       }
     }
     console.log("cost ", cost);
+    formData.cost = cost;
 
     Swal.fire({
       title: "Are you sure?",
@@ -59,13 +62,20 @@ export default function AddParcel() {
       cancelButtonColor: "#d33",
       confirmButtonText: "Confirm",
     }).then((result) => {
-      // if (result.isConfirmed) {
-      //   Swal.fire({
-      //     title: "Deleted!",
-      //     text: "Your file has been deleted.",
-      //     icon: "success",
-      //   });
-      // }
+      if (result.isConfirmed) {
+        // saving formData to mongodb datasbase
+        axiosSecure
+          .post("parcels", formData)
+          .then((data) => {
+            console.log("after saving to db ", data);
+            Swal.fire({
+              title: "Success!",
+              text: "One parcel added",
+              icon: "success",
+            });
+          })
+          .catch((err) => console.log(err));
+      }
     });
   }
 
@@ -168,12 +178,12 @@ export default function AddParcel() {
               </select>
             </fieldset>
 
-            <label className="label">Sender Contact No</label>
+            <label className="label">Sender Email</label>
             <input
-              {...register("senderContact")}
+              {...register("senderEmail")}
               type="text"
               className="input"
-              placeholder="Contact"
+              placeholder="Sender Email"
             />
 
             <label className="label">Pickup Instruction</label>
@@ -196,14 +206,6 @@ export default function AddParcel() {
               type="text"
               className="input"
               placeholder="Name"
-            />
-
-            <label className="label">Receiver Contact No</label>
-            <input
-              {...register("reciverContact")}
-              type="text"
-              className="input"
-              placeholder="Contact"
             />
 
             {/* reciverREgion  */}
@@ -236,6 +238,15 @@ export default function AddParcel() {
                 ))}
               </select>
             </fieldset>
+
+            <label className="label">Receiver Email</label>
+            <input
+              {...register("reciverContact")}
+              type="text"
+              className="input"
+              placeholder="Reciver Email"
+            />
+
             <label className="label">Delivary Instruction</label>
             <input
               {...register("deliveryInstruction")}
