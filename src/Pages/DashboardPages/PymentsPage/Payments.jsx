@@ -14,7 +14,7 @@ export default function Payments() {
       cost: parcels[0].cost,
       parcelName: parcels[0].parcelName,
       senderEmail: parcels[0].senderEmail,
-      paecelId: parcels[0]._id,
+      parcelId: parcels[0]._id,
     };
     const res = await axiosSecure.post(
       `/create-checkout-session `,
