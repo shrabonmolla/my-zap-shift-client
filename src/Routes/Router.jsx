@@ -10,6 +10,9 @@ import MyParcel from "../Pages/DashboardPages/MyParcel";
 import Payments from "../Pages/DashboardPages/PymentsPage/Payments";
 import PaySuccess from "../Pages/DashboardPages/PymentsPage/PaySuccess";
 import PayCancel from "../Pages/DashboardPages/PymentsPage/PayCancel";
+import PaymentHistory from "../Pages/DashboardPages/PaymentHistory/PaymentHistory";
+import BeARider from "../Pages/Be A Rider/BeARider";
+import ManageRiders from "../Pages/DashboardPages/Riders/ManageRiders";
 
 export const router = createBrowserRouter([
   // mainlayout
@@ -24,6 +27,11 @@ export const router = createBrowserRouter([
       {
         path: "add-parcel",
         element: <AddParcel />,
+        loader: () => fetch("./map.json"),
+      },
+      {
+        path: "be-a-rider",
+        element: <BeARider />,
         loader: () => fetch("./map.json"),
       },
     ],
@@ -64,6 +72,14 @@ export const router = createBrowserRouter([
       {
         path: "payment-cancel",
         element: <PayCancel />,
+      },
+      {
+        path: "payment-history",
+        element: <PaymentHistory />,
+      },
+      {
+        path: "manage-riders",
+        element: <ManageRiders />,
       },
     ],
   },

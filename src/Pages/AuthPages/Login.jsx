@@ -51,8 +51,8 @@ export default function Login() {
           <div className="flex w-full flex-col">
             <div className="divider">OR</div>
           </div>
-          <SocialSignIn />
         </form>
+        <SocialSignIn />
       </div>
     </div>
   );

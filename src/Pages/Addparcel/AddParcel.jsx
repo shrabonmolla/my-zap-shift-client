@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useLoaderData } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 
@@ -10,6 +10,7 @@ export default function AddParcel() {
   const serviceCenters = useLoaderData();
   const duplicateRegion = serviceCenters.map((r) => r.region);
   const regions = [...new Set(duplicateRegion)];
+  const navigate = useNavigate();
 
   // disricted by region
   function distictByRegion(region) {
@@ -73,6 +74,7 @@ export default function AddParcel() {
               text: "One parcel added",
               icon: "success",
             });
+            navigate("/dashboard/my-parcel");
           })
           .catch((err) => console.log(err));
       }

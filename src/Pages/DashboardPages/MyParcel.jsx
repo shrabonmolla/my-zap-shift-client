@@ -17,7 +17,7 @@ export default function MyParcel() {
       return res.data;
     },
   });
-  console.log(parcels);
+  // console.log(parcels);
 
   //   handle Delete
   function handleDelete(id) {
@@ -70,7 +70,7 @@ export default function MyParcel() {
             {parcels &&
               parcels.map((parcel, index) => {
                 return (
-                  <tr>
+                  <tr key={index}>
                     <th>{index + 1}</th>
                     <td>{parcel.parcelName}</td>
                     <td>{parcel.cost}</td>

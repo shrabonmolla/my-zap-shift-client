@@ -5,7 +5,10 @@ import SocialSignIn from "../../Components/Auth/SocialSignIn";
 
 import useAuthHook from "../../useAuthHook";
 import axios from "axios";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import { Axis3D } from "lucide-react";
 export default function Register() {
+  const axiosSecure = useAxiosSecure();
   const {
     register,
     handleSubmit,
@@ -33,9 +36,16 @@ export default function Register() {
           .then((data) => {
             console.log(data);
             const profileData = {
+              email: formdata.email,
               displayName: formdata.name,
               photoURL: data.data.data.url,
             };
+            // saving user data in db
+            axiosSecure
+              .post("/users", profileData)
+              .then((res) => console.log("saved user data in db ", res.data));
+
+            // updating user porfile
             updateUser(profileData)
               .then(() => console.log("profile updated"))
               .catch((err) => console.log(err.message));

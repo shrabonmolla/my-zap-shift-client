@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, Outlet } from "react-router";
 import Logo from "../Components/Home/Logo";
+import { History, HistoryIcon, Motorbike } from "lucide-react";
 
 export default function DashboardLayout() {
   return (
@@ -78,11 +79,12 @@ export default function DashboardLayout() {
 
             {/* List item  button*/}
             <li>
-              <button
+              <Link
+                to="my-parcel"
                 className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
                 data-tip="Settings"
               >
-                {/* Settings icon */}
+                {/* myparcel icon */}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -98,10 +100,35 @@ export default function DashboardLayout() {
                   <circle cx="17" cy="17" r="3"></circle>
                   <circle cx="7" cy="7" r="3"></circle>
                 </svg>
-                <Link to="my-parcel" className="is-drawer-close:hidden">
-                  My Parcel
-                </Link>
-              </button>
+                <span className="is-drawer-close:hidden">My Parcel</span>
+              </Link>
+            </li>
+            {/* Payment history */}
+            <li>
+              <Link
+                to="/dashboard/payment-history"
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="Homepage"
+              >
+                {/* histoy icon */}
+
+                <HistoryIcon className="my-1.5 inline-block size-4" />
+
+                <span className="is-drawer-close:hidden">Payment History</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/dashboard/manage-riders"
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="Homepage"
+              >
+                {/* histoy icon */}
+
+                <Motorbike className="my-1.5 inline-block size-4" />
+
+                <span className="is-drawer-close:hidden">Manage Riders</span>
+              </Link>
             </li>
           </ul>
         </div>

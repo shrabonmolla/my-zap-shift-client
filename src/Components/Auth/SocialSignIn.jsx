@@ -1,11 +1,23 @@
 import React from "react";
 import useAuthHook from "../../useAuthHook";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 export default function SocialSignIn() {
+  const axiosSecure = useAxiosSecure();
   const { signInGoogle } = useAuthHook();
   function handleGooglesignIn() {
     signInGoogle()
-      .then((user) => console.log(user))
+      .then((user) => {
+        console.log(user.user);
+        const userData = {
+          displayName: user.user.displayName,
+          photoURL: user.user.displayName,
+          email: user.user.email,
+        };
+        axiosSecure
+          .post("/users", userData)
+          .then((res) => console.log("saved user data in database", res));
+      })
       .catch((err) => console.log(err));
   }
   return (
