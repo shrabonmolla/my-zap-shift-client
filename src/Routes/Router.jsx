@@ -13,6 +13,7 @@ import PayCancel from "../Pages/DashboardPages/PymentsPage/PayCancel";
 import PaymentHistory from "../Pages/DashboardPages/PaymentHistory/PaymentHistory";
 import BeARider from "../Pages/Be A Rider/BeARider";
 import ManageRiders from "../Pages/DashboardPages/Riders/ManageRiders";
+import ManageUsers from "../Pages/DashboardPages/Users/ManageUsers";
 
 export const router = createBrowserRouter([
   // mainlayout
@@ -80,6 +81,10 @@ export const router = createBrowserRouter([
       {
         path: "manage-riders",
         element: <ManageRiders />,
+      },
+      {
+        path: "manage-users",
+        element: <ManageUsers />,
       },
     ],
   },

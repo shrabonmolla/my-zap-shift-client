@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, Outlet } from "react-router";
 import Logo from "../Components/Home/Logo";
-import { History, HistoryIcon, Motorbike } from "lucide-react";
+import { History, HistoryIcon, Motorbike, User, Users } from "lucide-react";
 
 export default function DashboardLayout() {
   return (
@@ -128,6 +128,19 @@ export default function DashboardLayout() {
                 <Motorbike className="my-1.5 inline-block size-4" />
 
                 <span className="is-drawer-close:hidden">Manage Riders</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/dashboard/manage-users"
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="Homepage"
+              >
+                {/* histoy icon */}
+
+                <Users className="my-1.5 inline-block size-4" />
+
+                <span className="is-drawer-close:hidden">Manage Users</span>
               </Link>
             </li>
           </ul>
