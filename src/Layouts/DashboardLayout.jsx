@@ -6,6 +6,7 @@ import {
   HistoryIcon,
   Motorbike,
   MotorbikeIcon,
+  PhoneCall,
   User,
   Users,
 } from "lucide-react";
@@ -169,6 +170,26 @@ export default function DashboardLayout() {
                 <MotorbikeIcon className="my-1.5 inline-block size-4" />
 
                 <span className="is-drawer-close:hidden">Assign Riders</span>
+              </Link>
+            </li>
+
+
+            
+            {/* rider only route */}
+            {/* assign deliveries */}
+            <li>
+              <Link
+                to="/dashboard/assign-deliveries"
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="Homepage"
+              >
+                {/* histoy icon */}
+
+                <PhoneCall className="my-1.5 inline-block size-4" />
+
+                <span className="is-drawer-close:hidden">
+                  Assign Deliveries
+                </span>
               </Link>
             </li>
           </ul>
