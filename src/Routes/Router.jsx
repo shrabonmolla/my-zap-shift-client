@@ -14,6 +14,8 @@ import PaymentHistory from "../Pages/DashboardPages/PaymentHistory/PaymentHistor
 import BeARider from "../Pages/Be A Rider/BeARider";
 import ManageRiders from "../Pages/DashboardPages/Riders/ManageRiders";
 import ManageUsers from "../Pages/DashboardPages/Users/ManageUsers";
+import AdminRoute from "./AdminRoute/AdminRoute";
+import AssignRiders from "../Pages/DashboardPages/Riders/AssignRiders";
 
 export const router = createBrowserRouter([
   // mainlayout
@@ -80,11 +82,23 @@ export const router = createBrowserRouter([
       },
       {
         path: "manage-riders",
-        element: <ManageRiders />,
+        element: (
+          <AdminRoute>
+            <ManageRiders />
+          </AdminRoute>
+        ),
       },
       {
         path: "manage-users",
-        element: <ManageUsers />,
+        element: (
+          <AdminRoute>
+            <ManageUsers />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "assign-riders",
+        element: <AssignRiders />,
       },
     ],
   },

@@ -87,7 +87,11 @@ export default function MyParcel() {
                         </Link>
                       )}
                     </td>
-                    <td>Blue</td>
+
+                    <td>
+                      {parcel.deliveryStatus ? parcel.deliveryStatus : "UnPaid"}
+                    </td>
+
                     <td className="flex gap-2">
                       <button className="btn ">
                         <Eye />

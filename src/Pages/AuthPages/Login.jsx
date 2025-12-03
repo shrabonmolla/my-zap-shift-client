@@ -6,7 +6,7 @@ import useAuthHook from "../../useAuthHook";
 export default function Login() {
   const { signInUser } = useAuthHook();
   function handleLogin(e) {
-    e.preventDefalut();
+    e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
     signInUser(email, password)

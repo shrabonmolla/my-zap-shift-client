@@ -60,6 +60,7 @@ export default function ManageRiders() {
             <th>Email</th>
             <th>District</th>
             <th>Status</th>
+            <th>Work Status</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -73,6 +74,7 @@ export default function ManageRiders() {
                   <td>{rider.email}</td>
                   <td>{rider.district}</td>
                   <td>{rider.status}</td>
+                  <td>{rider.workStatus}</td>
                   <td>
                     <button
                       onClick={() => handleApproveRider(rider)}

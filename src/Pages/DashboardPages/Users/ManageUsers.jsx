@@ -1,11 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import { UserMinus, UserRoundCheck } from "lucide-react";
 
 export default function ManageUsers() {
   const axiosSecure = useAxiosSecure();
 
-  const { data } = useQuery({
+  const { data, refetch } = useQuery({
     queryKey: ["users"],
     queryFn: async () => {
       const res = await axiosSecure.get(`/users`);
@@ -13,6 +14,29 @@ export default function ManageUsers() {
     },
   });
   //   console.log(data);
+
+  //    handleAdmin
+  function handleAddAdmin(id) {
+    const roleInfo = { role: "admin" };
+    axiosSecure
+      .patch(`/users/${id}`, roleInfo)
+      .then((res) => {
+        console.log("updated user role", res);
+        refetch();
+      })
+      .catch((err) => console.log(err));
+  }
+
+  function handleRemoveAdmin(id) {
+    const roleInfo = { role: "user" };
+    axiosSecure
+      .patch(`/users/${id}`, roleInfo)
+      .then((res) => {
+        console.log("updated user role", res);
+        refetch();
+      })
+      .catch((err) => console.log(err));
+  }
   return (
     <div>
       <h1>ManageUsers</h1>
@@ -38,14 +62,31 @@ export default function ManageUsers() {
                     <td>{user.displayName}</td>
                     <td>{user.email}</td>
                     <td>{user.role}</td>
-                    <td></td>
+                    <td>
+                      {user.role === "admin" ? (
+                        <button
+                          onClick={() => handleRemoveAdmin(user._id)}
+                          className="text-red-400"
+                        >
+                          <UserMinus />
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => handleAddAdmin(user._id)}
+                          className="text-green-400"
+                        >
+                          <UserRoundCheck />
+                        </button>
+                      )}
+                    </td>
                     <td></td>
                   </tr>
                 );
               })}
           </tbody>
         </table>
-      </div>``
+      </div>
+      ``
     </div>
   );
 }

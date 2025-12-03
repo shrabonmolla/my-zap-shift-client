@@ -1,9 +1,19 @@
 import React from "react";
 import { Link, Outlet } from "react-router";
 import Logo from "../Components/Home/Logo";
-import { History, HistoryIcon, Motorbike, User, Users } from "lucide-react";
+import {
+  History,
+  HistoryIcon,
+  Motorbike,
+  MotorbikeIcon,
+  User,
+  Users,
+} from "lucide-react";
+import useRole from "../hooks/useRole";
 
 export default function DashboardLayout() {
+  const { role } = useRole();
+
   return (
     <div className="drawer lg:drawer-open">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
@@ -117,19 +127,23 @@ export default function DashboardLayout() {
                 <span className="is-drawer-close:hidden">Payment History</span>
               </Link>
             </li>
-            <li>
-              <Link
-                to="/dashboard/manage-riders"
-                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                data-tip="Homepage"
-              >
-                {/* histoy icon */}
+            {/* manage riderds */}
+            {role === "admin" && (
+              <li>
+                <Link
+                  to="/dashboard/manage-riders"
+                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                  data-tip="Homepage"
+                >
+                  {/* histoy icon */}
 
-                <Motorbike className="my-1.5 inline-block size-4" />
+                  <Motorbike className="my-1.5 inline-block size-4" />
 
-                <span className="is-drawer-close:hidden">Manage Riders</span>
-              </Link>
-            </li>
+                  <span className="is-drawer-close:hidden">Manage Riders</span>
+                </Link>
+              </li>
+            )}
+            {/* manage users */}
             <li>
               <Link
                 to="/dashboard/manage-users"
@@ -141,6 +155,20 @@ export default function DashboardLayout() {
                 <Users className="my-1.5 inline-block size-4" />
 
                 <span className="is-drawer-close:hidden">Manage Users</span>
+              </Link>
+            </li>
+            {/* assign rideres */}
+            <li>
+              <Link
+                to="/dashboard/assign-riders"
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="Homepage"
+              >
+                {/* histoy icon */}
+
+                <MotorbikeIcon className="my-1.5 inline-block size-4" />
+
+                <span className="is-drawer-close:hidden">Assign Riders</span>
               </Link>
             </li>
           </ul>
