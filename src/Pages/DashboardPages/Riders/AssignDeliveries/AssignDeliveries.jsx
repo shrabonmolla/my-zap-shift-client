@@ -8,7 +8,7 @@ export default function AssignDeliveries() {
   const { user } = useAuthHook();
   const axiosSecure = useAxiosSecure();
 
-  const { data } = useQuery({
+  const { data, refetch } = useQuery({
     queryKey: ["parcels", user?.email, "driver-assigned"],
     queryFn: async () => {
       const res = await axiosSecure.get(
@@ -21,6 +21,25 @@ export default function AssignDeliveries() {
   if (!data) {
     return <Loading />;
   }
+
+  // handleDeliveryStatusUpdate
+  function handleDeliveryStatusUpdate(parcel, status) {
+    const statusInfo = {
+      deliveryStatus: status,
+      riderId: parcel.riderId,
+      trackingId: parcel.trackingId,
+    };
+
+    const message = ` you ${status}`;
+    axiosSecure
+      .patch(`/parcels/${parcel._id}/status`, statusInfo)
+      .then(() => {
+        alert(message);
+        refetch();
+      })
+      .catch((err) => console.log(err));
+  }
+
   return (
     <div>
       <h1>Total AssignDeliveries: {data.length}</h1>
@@ -42,8 +61,41 @@ export default function AssignDeliveries() {
                 <tr>
                   <th> {i + 1} </th>
                   <td>{parcel.parcelName}</td>
-                  <td>Quality Control Specialist</td>
-                  <td>Blue</td>
+                  <td>
+                    {parcel.deliveryStatus === "rider-arriving" ? (
+                      <span>Accepted</span>
+                    ) : (
+                      <button
+                        onClick={() =>
+                          handleDeliveryStatusUpdate(parcel, "rider-arriving")
+                        }
+                        className="btn btn-primary text-black"
+                      >
+                        Accept
+                      </button>
+                    )}
+                    <button className="btn btn-warning text-black ms-4">
+                      Reject
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      onClick={() =>
+                        handleDeliveryStatusUpdate(parcel, "parcel-picked-up")
+                      }
+                      className="btn btn-accent "
+                    >
+                      Pick UP{" "}
+                    </button>
+                    <button
+                      onClick={() =>
+                        handleDeliveryStatusUpdate(parcel, "parcel-delivered")
+                      }
+                      className="btn btn-secondary ms-2"
+                    >
+                      Delivered{" "}
+                    </button>
+                  </td>
                 </tr>
               );
             })}
